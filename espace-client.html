@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon espace client — CréditNova</title>
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/espace-client.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><img src="images/favicon.svg" width="34" height="34" alt=""></span>
+      <span class="logo-text">Crédit<span class="accent-text">Nova</span></span>
+    </a>
+    <div class="header-actions">
+      <a href="index.html" class="btn btn-ghost">Accueil</a>
+      <button type="button" class="btn btn-primary" id="logoutBtn">Se déconnecter</button>
+    </div>
+  </div>
+</header>
+
+<section class="dashboard-section">
+  <div class="container container-narrow">
+
+    <div class="dashboard-header">
+      <div class="dashboard-welcome">
+        <h1>Bonjour <span id="welcomeName">—</span> 👋</h1>
+        <p>Bienvenue dans votre espace client de démonstration.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-card">
+        <h2>Mes informations</h2>
+        <div class="profile-row"><span>Prénom</span><span id="profileFirstName">—</span></div>
+        <div class="profile-row"><span>Nom</span><span id="profileLastName">—</span></div>
+        <div class="profile-row"><span>E-mail</span><span id="profileEmail">—</span></div>
+        <div class="profile-row"><span>Compte créé le</span><span id="profileCreated">—</span></div>
+      </div>
+
+      <div class="dashboard-card">
+        <h2>Mes demandes de prêt</h2>
+        <div id="loanRequestsList">
+          <div class="empty-state">
+            <span class="empty-icon">⏳</span>
+            <p>Chargement...</p>
+          </div>
+        </div>
+        <a href="index.html#effectuer-demande" class="btn btn-cta" style="width:100%; justify-content:center; margin-top: 12px;">Faire une demande de prêt</a>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Besoin d'aide ?</h2>
+      <p style="color: var(--ink-600); font-size: 0.9rem;">Un conseiller CréditNova reste disponible pour répondre à vos questions concernant vos demandes en cours.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p>© 2026 CréditNova. Site de démonstration à but non commercial.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+(async () => {
+  const user = await CreditNovaAuth.requireAuth('connexion.html');
+  if (!user) return;
+
+  const firstName = user.user_metadata?.first_name || '—';
+  const lastName = user.user_metadata?.last_name || '—';
+
+  document.getElementById('welcomeName').textContent = firstName;
+  document.getElementById('profileFirstName').textContent = firstName;
+  document.getElementById('profileLastName').textContent = lastName;
+  document.getElementById('profileEmail').textContent = user.email;
+  document.getElementById('profileCreated').textContent = new Date(user.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const listEl = document.getElementById('loanRequestsList');
+  const { data: demandes, error } = await supabaseClient
+    .from('demandes')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    listEl.innerHTML = `<div class="empty-state"><span class="empty-icon">⚠️</span><p>Impossible de charger vos demandes pour le moment.</p></div>`;
+  } else if (!demandes || demandes.length === 0) {
+    listEl.innerHTML = `<div class="empty-state"><span class="empty-icon">📄</span><p>Aucune demande enregistrée pour l'instant.</p></div>`;
+  } else {
+    const formatEuro = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+    const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    listEl.innerHTML = demandes.map(d => `
+      <div class="profile-row">
+        <span>${new Date(d.created_at).toLocaleDateString('fr-FR')} — ${escapeHtml(d.loan_purpose)}</span>
+        <span>${formatEuro(d.amount)} / ${d.duration_years} ans</span>
+      </div>
+    `).join('');
+  }
+})();
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await CreditNovaAuth.logout();
+  window.location.href = 'index.html';
+});
+</script>
+</body>
+</html>

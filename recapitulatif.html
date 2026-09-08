@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Récapitulatif de votre crédit — CréditNova</title>
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/demande.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"><img src="images/favicon.svg" width="34" height="34" alt=""></span>
+      <span class="logo-text">Crédit<span class="accent-text">Nova</span></span>
+    </a>
+    <div class="header-actions">
+      <a href="index.html" class="btn btn-ghost">← Retour au simulateur</a>
+    </div>
+  </div>
+</header>
+
+<section class="request-section">
+  <div class="container container-narrow">
+
+    <!-- Progress -->
+    <div class="progress-track">
+      <div class="progress-step done"><span>1</span>Simulation</div>
+      <div class="progress-line"></div>
+      <div class="progress-step active"><span>2</span>Récapitulatif</div>
+      <div class="progress-line"></div>
+      <div class="progress-step"><span>3</span>Vos informations</div>
+      <div class="progress-line"></div>
+      <div class="progress-step"><span>4</span>Confirmation</div>
+    </div>
+
+    <div class="summary-card">
+      <p class="summary-intro">Nous vous présentons le récapitulatif de votre paramètre de crédit</p>
+
+      <div class="summary-rows">
+        <div class="summary-row">
+          <span class="summary-label">Montant de l'emprunt</span>
+          <strong class="summary-value" id="sumAmount">—</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Durée du prêt</span>
+          <strong class="summary-value" id="sumDuration">—</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Taux annuel du crédit</span>
+          <strong class="summary-value" id="sumRate">—</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Début du crédit</span>
+          <strong class="summary-value" id="sumStartDate">—</strong>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Mensualité du crédit</span>
+          <strong class="summary-value" id="sumMonthly">—</strong>
+        </div>
+        <div class="summary-row summary-row-total">
+          <span class="summary-label">TOTAL DES MENSUALITÉS HORS ASSURANCE</span>
+          <strong class="summary-value" id="sumTotalPayments">—</strong>
+        </div>
+        <div class="summary-row summary-row-total">
+          <span class="summary-label">TOTAL DES INTÉRÊTS</span>
+          <strong class="summary-value summary-value-orange" id="sumTotalInterest">—</strong>
+        </div>
+      </div>
+
+      <p class="summary-confirm-text">Veuillez poursuivre votre demande si tout semble être correct.</p>
+
+      <div class="sim-footer">
+        <a href="index.html#effectuer-demande" class="btn btn-ghost">← Modifier le montant ou la durée</a>
+        <button type="button" class="btn btn-cta btn-lg" id="proceedBtn">
+          Poursuivre ma demande
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9h10M9 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p>© 2026 CréditNova. Site de démonstration à but non commercial.</p>
+  </div>
+</footer>
+
+<script src="js/recapitulatif.js"></script>
+</body>
+</html>
