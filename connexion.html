@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '959304800539986');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=959304800539986&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion — CréditNova</title>
@@ -33,11 +50,6 @@
       <h1>Connexion à votre espace</h1>
       <p class="auth-sub">Accédez à vos informations et au suivi de vos demandes.</p>
 
-      <div class="auth-demo-notice">
-        <span>⚠️</span>
-        <p><strong>Projet de démonstration.</strong> L'authentification est réelle (Supabase) mais ce site n'est pas un établissement de crédit. N'utilisez jamais un mot de passe que vous utilisez ailleurs.</p>
-      </div>
-
       <div class="auth-error" id="authError" hidden></div>
 
       <form class="auth-form" id="loginForm" novalidate>
@@ -60,7 +72,7 @@
 
 <footer class="site-footer">
   <div class="container footer-bottom">
-    <p>© 2026 CréditNova. Site de démonstration à but non commercial.</p>
+    <p>© 2026 CréditNova. Tous droits réservés.</p>
   </div>
 </footer>
 
